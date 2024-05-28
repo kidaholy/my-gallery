@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wonder's Gallery</title>
+    <meta property="og:title" content="Wonder's Gallery" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="The Seven wonders of World" />
+    <meta name="description" content="The Seven wonders of World" />
+    <meta name="keywords" content="Wonder's Gallery, Som Gallery, Hackathon" />
+    <meta property="og:site_name" content="Wonder's Gallery" />
+    <meta
+      property="og:image"
+      content="https://www.oppaca.com/hubfs/Imported_Blog_Media/copertina-May-19-2022-12-37-29-33-PM.jpg"
+    />
+    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @keyframes colorchange {
+        0% {
+          color: white;
+        }
+        25% {
+          color: green;
+        }
+        50% {
+          color: red;
+        }
+        75% {
+          color: blue;
+        }
+        100% {
+          color: white;
+        }
+      }
+      @keyframes bgchange {
+        0% {
+          background: white;
+        }
+        25% {
+          background: yellow;
+        }
+        50% {
+          background: red;
+        }
+        100% {
+          background: blue;
+        }
+      }
+      @keyframes fadein {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      @keyframes zoom {
+        0% {
+          opacity: 0;
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        90% {
+          opacity: 1;
+          transform: scale(10);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(15);
+        }
+      }
+      @keyframes bgcolorchange {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      
+      body {
+        height: 100vh;
+        margin: 0px;
+        cursor: none;
+        overflow: hidden;
+        background: linear-gradient(
+          -45deg, black
+          ,rgb(48, 48, 48),rgb(104, 104, 105),rgb(97, 97, 97)
+          );
+        
+      }
+      .start-body{
+          background-size: 400% 400%;
+        animation: bgcolorchange 20s ease infinite;
+      }
+      .image {
+        border-radius: 40px;
+        width: 35vmin;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        animation: fadein 0.7s ease-in-out;
+      }
+      .image[data-status="inactive"] {
+        display: none;
+      }
+      .image [data-status="active"] {
+        display: block;
+      }
+      .entry {
+        position: fixed;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        background-size: cover;
+        justify-content: center;
+        align-items: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+      }
+      #head {
+        position: fixed;
+        font-family: monospace;
+        font-size: 30px;
+        color: white;
+        opacity: 0;
+        
+      }
+      .start-h1{
+        top: calc(50vh - 75px);
+        left: calc(50vw - 75px);
+        animation: zoom 2s ease-in-out;
+      }
+      
+      #icons {
+        color: transparent;
+        z-index: 1;
+        font-size: 20px;
+        padding-left: 5px;
+        padding-top: 20px;
+        transition: 0.5s ease-in-out;
+        color: darkgray;
+      }
+      i:hover {
+        z-index: 1;
+      
+        animation: colorchange 5s ease-in-out infinite;
+      }
+      .center {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        display: flex;
+          color: white;
+          z-index: -1;
+        flex-direction: column;
+        position: fixed;
+        top: calc(50vh - 75px);
+        left: calc(50vw - 75px);
+        animation: colorchange 20s ease-in-out infinite;
+      }
+      #hover {
+        font-family: monospace;
+        font-size: 20px;
+      
+      }
+      .fadein{
+        
+        animation: fadein 5s ease-in-out;
+      }
+      .gallery {
+        bottom: 0;
+        display: flex;
+      
+        justify-content: center;
+        text-align: center;
+        left: calc(45vw - 75px);
+        position: fixed;
+      }
+      
+      .cursor {
+        z-index: 999999;
+        width: 50px;
+        height: 50px;
+        border-radius: 100%;
+        border: 1px solid #fff;
+        transition: all 200ms ease-out;
+        position: fixed;
+        pointer-events: none;
+        left: 0;
+        top: 0;
+        mix-blend-mode: difference;
+        transform: translate(calc(-50% + 15px), -50%);
+      }
+      
+      .cursor2 {
+        z-index: 999999;
+        width: 20px;
+        height: 20px;
+        border-radius: 100%;
+        animation: bgchange 5s ease-in-out infinite;
+        mix-blend-mode: difference;
+        opacity: 0.3;
+        position: fixed;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        transition: width 0.3s, height 0.3s, opacity 0.3s;
+      }
+      
+      .cursorinnerhover {
+        width: 50px;
+        height: 50px;
+        z-index: 999999;
+        opacity: 0.5;
+      }
+      
+      ul {
+      
+        justify-content: center;
+        display: flex;
+        flex-direction: row;
+      }
+      ul li {
+        list-style: none;
+      }
+      ul li:before {
+        content: attr(data-text);
+        position: absolute;
+        top: 15%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 6em;
+        color: white;
+        font-weight: 700;
+        pointer-events: none;
+        opacity: 0;
+        letter-spacing: 20px;
+        transition: 0.5s;
+        animation: colorchange 20s ease-in-out infinite;
+        white-space: nowrap;
+      }
+      ul li:hover:before {
+        opacity: 1;
+        letter-spacing: 0px;
+      }
+      ul li a {
+        cursor: none;
+        position: relative;
+        display: inline-block;
+        padding: 6px 15px;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: 0.5s;
+        overflow: hidden;
+        z-index: 1;
+      }
+      
+      ul:hover li a {
+        opacity: 0;
+      }
+      ul li a:hover {
+        transform: scale(1.4);
+        z-index: 10000;
+      
+        opacity: 1;
+      }
+      ul li a:hover:before {
+        left: calc(100% + 100px);
+        transition: 0.5s;
+        transition-delay: 0.2s;
+      }
+      #image-text {
+        font-family: monospace;
+        font-size: 30px;
+        color: white;
+        z-index: 9999999;
+        padding: 50px;
+        text-align: center;
+        animation: colorchange 20s ease-in-out infinite;
+      }
+      a{
+        cursor: none;
+        text-decoration: none;
+      }
+      #canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: -1;
+        height: 100%;
+        animation: fadein 10s ease-in-out;
+      }
+      #start{
+        width: 100%;
+        height: 100vh;
+        cursor:default;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: black;
+      }
+      #play-button
+      {
+        padding:20px;
+        border: 2px solid white;
+        border-radius: 30px;
+        background-color: black;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <audio loop autoplay="true" id="audio1">
+      <source src="comebackdown.mp3" type="audio/mp3" />
+    </audio>
+<div id="start">
+  <button id="play-button" >Start</button>
+</div>
+    <div class="cursor"></div>
+    <div class="cursor2"></div>
+
+    <canvas id="canvas"></canvas>
+    <div class="entry">
+      <h1 id="head">Wonder's Gallery</h1>
+      <ul>
+        <li data-text="instagram">
+          <a href="https://www.instagram.com/som.developer/">
+            <i id="icons" class="fa-brands fa-instagram"> </i
+          ></a>
+        </li>
+
+        <li data-text="github">
+          <a href="https://github.com/VEcTorX009">
+            <i id="icons" class="fa-brands fa-github"> </i
+          ></a>
+        </li>
+        <li data-text="linkedIn">
+          <a href="https://www.linkedin.com/in/somsrivastava">
+            <i id="icons" class="fa-brands fa-linkedin"> </i
+          ></a>
+        </li>
+        <li data-text="website">
+          <a href="https://www.thevector.xyz/"
+            ><i id="icons" class="fa-solid fa-link"></i
+          ></a>
+        </li>
+      </ul>
+    </div>
+    <div class="center">
+      <h2 id="hover">Hover Your Magic</h2>
+    </div>
+
+    <div>
+      <img
+        src="https://images.unsplash.com/flagged/photo-1552553030-837c9c2b0fac?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+        alt="Great Wall of China"
+        data-index="0"
+        data-status="inactive"
+        class="image"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1602065286283-f9bd5cda2470?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+        alt="The Colosseum, Rome, Italy"
+        data-index="1"
+        data-status="inactive"
+        class="image"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1523428461295-92770e70d7ae?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=695&q=80"
+        alt="The Taj Mahal, India"
+        data-index="2"
+        data-status="inactive"
+        class="image"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1564659907532-6b5f98c8e70f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1937&q=80"
+        alt="Christ the Redeemer, Brazil"
+        data-index="3"
+        data-status="inactive"
+        class="image"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1461863109726-246fa9598dc3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+        alt="Machu Picchu, Peru"
+        data-index="4"
+        data-status="inactive"
+        class="image"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1641600185898-e3d0ae5e4461?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
+        alt="Chichén Itzá, Mexico"
+        data-index="5"
+        data-status="inactive"
+        class="image"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1579774637643-7ef1053cca57?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
+        alt="Petra, Jordan"
+        data-index="6"
+        data-status="inactive"
+        class="image"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1514222134-b57cbb8ce073?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+        alt="Golden Temple"
+        data-index="7"
+        data-status="inactive"
+        class="image"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1428366890462-dd4baecf492b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+        alt="Empire State Building"
+        data-index="8"
+        data-status="inactive"
+        class="image"
+      />
+      <img
+        src="https://images.unsplash.com/photo-1588733103629-b77afe0425ce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+        alt="CN Tower"
+        data-index="9"
+        data-status="inactive"
+        class="image"
+      />
+      <script
+        src="https://kit.fontawesome.com/8da2eb643d.js"
+        crossorigin="anonymous"
+      ></script>
+    </div>
+    <div class="gallery">
+      <a id="image-text"></a>
+    </div>
+
+   <script>
+    var playButton = document.getElementById("play-button");
+playButton.addEventListener("click", function () {
+  document.getElementById("start").style.height = "0";
+  document.getElementById("start").style.width = "0";
+  playButton.style.display = "none";
+  setTimeout(() => {
+    window.onmousemove = (e) => handleOnMove(e);
+
+    window.ontouchmove = (e) => handleOnMove(e.touches[0]);
+  }, 3500);
+  document.body.classList.add("start-body");
+  document.getElementById("head").classList.add("start-h1");
+  document.getElementById("hover").classList.add("fadein");
+  document.getElementById("icons").classList.add("fadein");
+  var context = null;
+  var buffer = null;
+  var source = null;
+  context = new (window.AudioContext || window.webkitAudioContext)();
+  source = context.createBufferSource();
+  source.buffer = buffer;
+  source.connect(context.destination);
+  source.start();
+  var audio1 = document.getElementById("audio1");
+  audio1.autoplay;
+  audio1.loop = "infinite";
+  audio1.volume = 0.05;
+
+  const images = document.getElementsByClassName("image");
+
+  let Index = 0;
+
+  last = { x: 0, y: 0 };
+  const activate = (img, x, y) => {
+    img.style.left = `${x}px`;
+    img.style.top = `${y}px`;
+    img.style.zIndex = Index;
+
+    img.dataset.status = "active";
+
+    last = { x, y };
+  };
+
+  const lengthfromend = (x, y) => {
+    return Math.hypot(x - last.x, y - last.y);
+  };
+
+  window.handleOnMove = (e) => {
+    var cursor = document.querySelector(".cursor");
+    var cursorinner = document.querySelector(".cursor2");
+    var a = document.querySelectorAll("a");
+    document.addEventListener("mousemove", function (e) {
+      var x = e.clientX;
+      var y = e.clientY;
+      cursor.style.transform = `translate3d(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%), 0)`;
+      cursorinner.style.left = x + "px";
+      cursorinner.style.top = y + "px";
+      if (lengthfromend(x, y) > window.innerWidth / 20 && y < 600 && y > 300) {
+        const first = images[Index % 10],
+          tail = images[(Index - 5) % 10];
+        const name = document.getElementById("image-text");
+        const text = first.getAttribute("alt");
+        name.innerText = text;
+        name.href = `https://www.google.com/search?q=${text}&sxsrf=AJOqlzV2CB2DCY6LltgVx2-MDXkM3utu5Q%3A1676118424793&ei=mInnY-TsL8ScseMPp_2H0AI&ved=0ahUKEwjkmL7au439AhVETmwGHaf-ASoQ4dUDCA8&uact=5&oq=The+Taj+Mahal+of+India&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAzILCC4QgAQQxwEQrwEyCQgAEBYQHhDxBDIJCAAQFhAeEPEEMgkIABAWEB4Q8QQyCQgAEBYQHhDxBDIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIJCAAQFhAeEPEEMgkIABAWEB4Q8QQ6CggAEEcQ1gQQsAM6BwgAELADEEM6BwgjEOoCECc6DAgAEOoCELQCEEMYAToNCAAQjwEQ6gIQtAIYAjoNCC4QjwEQ6gIQtAIYAjoECCMQJzoFCAAQkQI6EAguELEDEIMBEMcBENEDEEM6CggAELEDEIMBEEM6BQguEIAEOgQIABBDOgUIABCABDoICAAQgAQQsQM6CwguEIAEELEDEIMBOgoILhCxAxCDARBDOgcIABCxAxBDOgsIABCABBCxAxCDAToECC4QJzoICC4QsQMQgwE6CAguEIAEELEDOggIABCxAxCDAToLCC4QgAQQxwEQ0QM6CwguEK8BEMcBEIAEOggIABAWEB4QCjoFCCEQoAE6BQgAEIYDOggIABAWEB4QD0oECEEYAEoECEYYAVDFHFiDV2DOWGgFcAF4AIABjQKIAZokkgEGMC4xOS42mAEAoAEBsAEUyAEJwAEB2gEGCAEQARgB2gEGCAIQARgK&sclient=gws-wiz-serp`;
+
+        activate(first, e.clientX, e.clientY);
+
+        if (tail) tail.dataset.status = "inactive";
+        Index++;
+      }
+    });
+
+    document.addEventListener("mousedown", function () {
+      cursor.classList.add("click");
+      cursorinner.classList.add("cursorinnerhover");
+    });
+
+    document.addEventListener("mouseup", function () {
+      cursor.classList.remove("click");
+      cursorinner.classList.remove("cursorinnerhover");
+    });
+
+    a.forEach((item) => {
+      item.addEventListener("mouseover", () => {
+        cursor.classList.add("hover");
+      });
+      item.addEventListener("mouseleave", () => {
+        cursor.classList.remove("hover");
+      });
+    });
+  };
+
+  const canvas = document.getElementById("canvas");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const ctx = canvas.getContext("2d");
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  let audioSource = null;
+  let analyser = null;
+
+  audio1.play();
+  audioSource = audioCtx.createMediaElementSource(audio1);
+  analyser = audioCtx.createAnalyser();
+  audioSource.connect(analyser);
+  analyser.connect(audioCtx.destination);
+  analyser.fftSize = 128;
+  const bufferLength = analyser.frequencyBinCount;
+  const dataArray = new Uint8Array(bufferLength);
+  const barWidth = canvas.width / bufferLength;
+
+  let x = 0;
+  function animate() {
+    x = 0;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    analyser.getByteFrequencyData(dataArray);
+    for (let i = 0; i < bufferLength; i++) {
+      barHeight = dataArray[i];
+      ctx.fillStyle = "rgb(101,105,150)";
+      ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+      x += barWidth;
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+});
+
+   </script>
+    <!-- <script src="script.js"></script> -->
+  </body>
+</html>
